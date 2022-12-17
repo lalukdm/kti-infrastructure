@@ -10,8 +10,9 @@ services:
       - ./html:/usr/share/nginx/html
     depends_on:
       - flask
+
   flask:
-    image: "lalukdm/flask:1.0"
+    image: "lalukdm/flask:3.0"
     container_name: flask
     environment:
       - FLASK_DEBUG=True
@@ -23,6 +24,7 @@ services:
     command: sh -c "pip install -r requirements.txt && python app.py"
     depends_on:
       - postgres
+
   postgres:
     image: "postgres:15.0-alpine"
     container_name: postgres
@@ -32,3 +34,4 @@ services:
       - "5432:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
+      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
